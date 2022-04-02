@@ -31,6 +31,21 @@ impl Card {
     }
 }
 
+impl PartialEq for Card {
+    fn eq(&self, other: &Self) -> bool {
+        if let Some(suit) = self.suit {
+            if let Some(osuit) = other.suit {
+                return suit == osuit && self.value == other.value;
+            }
+        } else {
+            if other.suit.is_none() {
+                return self.value == other.value;
+            }
+        }
+        false
+    }
+}
+
 impl Display for Card {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let display_str = match self.value() {
